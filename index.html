@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sirisha Tatikonda</title>
+<meta name="description" content="Sirisha Tatikonda — Embedded Systems & Firmware Engineer. ARM microcontrollers, Embedded C, CAN, IoT.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;600;700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a component datasheet — header block with a spec table, then pinned sections laid out like a board, separated by a clock-signal trace. */
+:root{
+  --bg:#f3f5f2; --surface:#ffffff; --fg:#17201c; --muted:#56635c; --line:#d5ddd8;
+  --board:#1f4a3c; --copper:#a8601f; --copper-soft:#f2e3d3;
+  --f-display:"Familjen Grotesk","Helvetica Neue",Arial,sans-serif;
+  --f-body:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1714; --surface:#16211d; --fg:#e4ebe7; --muted:#9aaba2; --line:#2a3933;
+  --board:#7fc4a6; --copper:#e0995a; --copper-soft:#33251a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1714; --surface:#16211d; --fg:#e4ebe7; --muted:#9aaba2; --line:#2a3933;
+  --board:#7fc4a6; --copper:#e0995a; --copper-soft:#33251a; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:980px;margin:0 auto;padding-block:48px 64px;display:flex;flex-direction:column;gap:56px}
+a{color:var(--board);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--copper);outline-offset:2px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+.label{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.mono{font-family:var(--f-mono)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:start}
+.hero h1{font-size:clamp(40px,7vw,68px);font-weight:700;letter-spacing:-.02em}
+.role{font-family:var(--f-display);font-size:clamp(19px,2.4vw,24px);color:var(--board);font-weight:600;margin-top:10px}
+.intro{max-width:58ch;color:var(--muted);margin:18px 0 0}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{font:500 14px var(--f-body);display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:6px;
+  border:1px solid var(--line);background:var(--surface);color:var(--fg);text-decoration:none;cursor:pointer}
+.btn.primary{background:var(--board);border-color:var(--board);color:var(--bg)}
+.btn:hover{border-color:var(--copper)}
+.status{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:14px;color:var(--muted)}
+.led{width:9px;height:9px;border-radius:50%;background:#3fae6a;box-shadow:0 0 0 3px color-mix(in srgb,#3fae6a 25%,transparent)}
+
+.spec{background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.spec-head{display:flex;justify-content:space-between;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--copper-soft)}
+.spec-head span{font-family:var(--f-mono);font-size:12px;color:var(--copper);letter-spacing:.06em;text-transform:uppercase}
+.spec table{width:100%;border-collapse:collapse;font-size:14px}
+.spec th,.spec td{text-align:left;padding:10px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.spec tr:last-child th,.spec tr:last-child td{border-bottom:0}
+.spec th{font-family:var(--f-mono);font-weight:500;font-size:12px;color:var(--muted);width:38%;text-transform:uppercase;letter-spacing:.05em}
+
+/* Clock trace divider */
+.trace{display:block;width:100%;height:22px;color:var(--line)}
+
+/* Sections */
+section{display:flex;flex-direction:column;gap:22px}
+.sec-head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(26px,3.5vw,34px);font-weight:600}
+.pin{font-family:var(--f-mono);font-size:12px;color:var(--copper);border:1px solid var(--copper);border-radius:4px;padding:1px 7px}
+
+.projects{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.proj.feature{grid-column:1/-1;border-color:var(--board)}
+.proj .meta{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.proj h3{font-size:21px;font-weight:600}
+.proj p{margin:0;color:var(--muted);font-size:15px}
+.proj ul{margin:0;padding-left:18px;color:var(--muted);font-size:15px;display:flex;flex-direction:column;gap:4px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px}
+.chip{font-family:var(--f-mono);font-size:12px;padding:3px 8px;border-radius:4px;background:var(--bg);border:1px solid var(--line);color:var(--fg)}
+
+.timeline{display:flex;flex-direction:column;border-left:2px solid var(--line);margin-left:6px}
+.t-item{position:relative;padding:0 0 28px 26px;display:flex;flex-direction:column;gap:6px}
+.t-item:last-child{padding-bottom:0}
+.t-item::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:2px;background:var(--copper)}
+.t-item h3{font-size:20px;font-weight:600}
+.t-item .org{color:var(--board);font-weight:500}
+.t-item ul{margin:4px 0 0;padding-left:18px;color:var(--muted);font-size:15px;max-width:70ch}
+
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:16px}
+.skill-group{display:flex;flex-direction:column;gap:10px;padding-top:14px;border-top:2px solid var(--fg)}
+
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.list li{display:flex;flex-direction:column;gap:2px}
+.list .sub{color:var(--muted);font-size:14px}
+
+.contact{background:var(--board);color:var(--bg);border-radius:10px;padding:36px 28px;display:flex;flex-direction:column;gap:16px}
+.contact h2{font-size:clamp(26px,4vw,38px)}
+.contact p{margin:0;max-width:56ch;opacity:.9}
+.contact .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.contact .addr{font-family:var(--f-mono);font-size:15px;user-select:all;padding:9px 12px;border-radius:6px;background:color-mix(in srgb,var(--bg) 14%,transparent)}
+.contact .btn{background:var(--bg);color:var(--fg);border-color:var(--bg)}
+footer{font-size:13px;color:var(--muted);text-align:center}
+
+@media (max-width:760px){
+  .hero,.projects,.two{grid-template-columns:minmax(0,1fr)}
+  .wrap{padding-block:28px 48px;gap:44px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .btn{transition:border-color .15s}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <div class="label">Portfolio · ECE 2025</div>
+      <h1 style="margin-top:10px">Sirisha Tatikonda</h1>
+      <div class="role">Embedded Systems &amp; Firmware Engineer</div>
+      <p class="intro">I write Embedded C for ARM microcontrollers and connect sensors, displays and networks into working systems. I've built a CAN-based vehicle monitor on LPC2129, an encrypted door-access system on LPC2148, and an IoT fall-detection system for elderly care on ESP32-CAM and Raspberry Pi.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/sirishatatikonda03-arch" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn" href="https://www.linkedin.com/in/sirisha-tatikonda-5087273b5" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn" href="#projects">See projects</a>
+        <a class="btn" href="#contact">Contact</a>
+      </div>
+      <div class="status"><span class="led" aria-hidden="true"></span>Open to Embedded, Firmware and IoT roles · Andhra Pradesh, India</div>
+    </div>
+
+    <aside class="spec" aria-label="Quick specs">
+      <div class="spec-head"><span>Datasheet</span><span>Rev 2026.10</span></div>
+      <table>
+        <tr><th>Languages</th><td>Embedded C, C, C++, Python (basics)</td></tr>
+        <tr><th>Controllers</th><td class="mono">LPC2129 · LPC2148 · ESP32 · ESP32‑CAM · i.MX6ULL</td></tr>
+        <tr><th>Protocols</th><td class="mono">UART · SPI · I2C · CAN · TCP/IP</td></tr>
+        <tr><th>Tools</th><td>Keil µVision, Flash Magic, Arduino IDE, Proteus, MATLAB, Git</td></tr>
+        <tr><th>Education</th><td>B.Tech ECE, MVGR College of Engineering · CGPA 7.73</td></tr>
+      </table>
+    </aside>
+  </header>
+
+  <svg class="trace" viewBox="0 0 980 22" preserveAspectRatio="none" aria-hidden="true"><polyline fill="none" stroke="currentColor" stroke-width="2" points="0,18 40,18 40,4 80,4 80,18 120,18 120,4 160,4 160,18 200,18 200,4 240,4 240,18 280,18 280,4 320,4 320,18 360,18 360,4 400,4 400,18 440,18 440,4 480,4 480,18 520,18 520,4 560,4 560,18 600,18 600,4 640,4 640,18 680,18 680,4 720,4 720,18 760,18 760,4 800,4 800,18 840,18 840,4 880,4 880,18 920,18 920,4 960,4 960,18 980,18"/></svg>
+
+  <section id="projects">
+    <div class="sec-head"><span class="pin">P1</span><h2>Projects</h2></div>
+    <div class="projects">
+
+      <article class="proj feature">
+        <div class="meta"><span class="label">Final-year project · AICTE RPS Scheme</span><span class="label">Jul 2024 – Apr 2025</span></div>
+        <h3>IoT Fall Detection &amp; Alert System for Elderly and Disabled People</h3>
+        <ul>
+          <li>Real-time monitoring with ESP32-CAM and Raspberry Pi; posture analysis with YOLOv8 and OpenPose to detect falls.</li>
+          <li>Face recognition with Edge Impulse to identify the person being monitored.</li>
+          <li>Alerts by SMS, Bluetooth and the Blynk cloud dashboard. Led the project team.</li>
+        </ul>
+        <div class="chips"><span class="chip">ESP32-CAM</span><span class="chip">Raspberry Pi</span><span class="chip">YOLOv8</span><span class="chip">OpenPose</span><span class="chip">Edge Impulse</span><span class="chip">Blynk</span></div>
+      </article>
+
+      <article class="proj">
+        <div class="meta"><span class="label">LPC2129 · Multi-node</span></div>
+        <h3>Automotive Parameter Monitoring over CAN</h3>
+        <p>Several LPC2129 nodes exchange fuel level, engine temperature and indicator status on a CAN bus. Sensor values are read through the ADC and shown live on an LCD.</p>
+        <div class="chips"><span class="chip">CAN</span><span class="chip">ADC</span><span class="chip">LCD</span><span class="chip">Embedded C</span></div>
+      </article>
+
+      <article class="proj">
+        <div class="meta"><span class="label">LPC2148 · Security</span></div>
+        <h3>Encrypted Door Access with Attendance</h3>
+        <p>Password-based door access with basic encryption on the LPC2148, which also records attendance automatically on each valid entry.</p>
+        <div class="chips"><span class="chip">LPC2148</span><span class="chip">Keypad</span><span class="chip">Encryption</span><span class="chip">Embedded C</span></div>
+      </article>
+
+      <article class="proj">
+        <div class="meta"><span class="label">Data acquisition</span></div>
+        <h3>Time-Stamped Sensor Data Logger</h3>
+        <p>Collects sensor readings and stamps each one with time from an RTC module, so the data can be reviewed and analysed later.</p>
+        <div class="chips"><span class="chip">RTC</span><span class="chip">I2C</span><span class="chip">Sensors</span><span class="chip">Embedded C</span></div>
+      </article>
+
+      <article class="proj">
+        <div class="meta"><span class="label">C programming</span></div>
+        <h3>Train Ticket Reservation System</h3>
+        <p>Console application for booking, cancellation, login and record management, built with structures, linked lists and file handling.</p>
+        <div class="chips"><span class="chip">C</span><span class="chip">Linked lists</span><span class="chip">File I/O</span></div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="sec-head"><span class="pin">P2</span><h2>Experience &amp; training</h2></div>
+    <div class="timeline">
+      <div class="t-item">
+        <span class="label">Aug 2025 – Apr 2026</span>
+        <h3>Embedded Systems Training</h3>
+        <div class="org">Vector India</div>
+        <ul>
+          <li>Embedded C and C++ with a focus on pointers, memory and low-level programming.</li>
+          <li>Hands-on with ARM7 LPC2129 and LPC2148: GPIO, UART, ADC, LCD, timers and peripheral interfacing.</li>
+          <li>UART, SPI, I2C, CAN and TCP/IP in microcontroller projects; Linux fundamentals; debugging with Keil and Flash Magic.</li>
+        </ul>
+      </div>
+      <div class="t-item">
+        <span class="label">May 2024 – Jun 2024</span>
+        <h3>Assistant Embedded Developing Engineer (Intern)</h3>
+        <div class="org">Viyara Embedded Pvt. Ltd., Hyderabad</div>
+        <ul>
+          <li>IoT home-automation solutions on industrial development boards.</li>
+          <li>Worked with the NXP i.MX6ULL (ARM Cortex-A7) on coding, hardware interfacing, testing and debugging.</li>
+          <li>Used GitHub for version control and project tracking. Received a Certificate of Merit.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="sec-head"><span class="pin">P3</span><h2>Skills</h2></div>
+    <div class="skills">
+      <div class="skill-group"><span class="label">Embedded</span><div class="chips"><span class="chip">Embedded C</span><span class="chip">GPIO</span><span class="chip">ADC</span><span class="chip">Timers</span><span class="chip">LCD</span><span class="chip">RTC</span><span class="chip">Sensor interfacing</span></div></div>
+      <div class="skill-group"><span class="label">Protocols</span><div class="chips"><span class="chip">UART</span><span class="chip">SPI</span><span class="chip">I2C</span><span class="chip">CAN</span><span class="chip">TCP/IP</span></div></div>
+      <div class="skill-group"><span class="label">Languages &amp; tools</span><div class="chips"><span class="chip">C</span><span class="chip">C++</span><span class="chip">Python</span><span class="chip">Keil µVision</span><span class="chip">Flash Magic</span><span class="chip">Proteus</span><span class="chip">MATLAB</span><span class="chip">Git</span><span class="chip">Linux</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="two">
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="sec-head"><span class="pin">P4</span><h2>Certifications</h2></div>
+        <ul class="list">
+          <li><strong>Embedded Systems</strong><span class="sub">IIT Bhubaneswar · Mar 2024</span></li>
+          <li><strong>Introduction to Microprocessors</strong><span class="sub">ARM Education · Mar – Apr 2024</span></li>
+          <li><strong>Certificate of Merit, Home Automation using Industrial Boards</strong><span class="sub">Internship · May – Jun 2024</span></li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:18px">
+        <div class="sec-head"><span class="pin">P5</span><h2>Education</h2></div>
+        <ul class="list">
+          <li><strong>B.Tech, Electronics &amp; Communication Engineering</strong><span class="sub">MVGR College of Engineering · 2021 – 2025 · CGPA 7.73</span></li>
+          <li><strong>Intermediate</strong><span class="sub">Tirumala Junior College · 2018 – 2020 · 90.5%</span></li>
+          <li><strong>Leadership</strong><span class="sub">Final-year project team lead · FYFP Club member · Event decoration team coordinator</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <span class="label" style="color:inherit;opacity:.8">Contact</span>
+    <h2>Let's build something that runs on real hardware.</h2>
+    <p>I'm looking for Embedded Systems, Firmware and IoT roles. The fastest way to reach me is email.</p>
+    <div class="row">
+      <span class="addr" id="email">sirishatatikonda26@gmail.com</span>
+      <button class="btn" id="copy" type="button">Copy email</button>
+      <a class="btn" href="https://www.linkedin.com/in/sirisha-tatikonda-5087273b5" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a class="btn" href="https://github.com/sirishatatikonda03-arch" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </section>
+
+  <footer>© 2026 Sirisha Tatikonda</footer>
+</div>
+
+<script>
+document.getElementById('copy').addEventListener('click', function(){
+  var b=this, t=document.getElementById('email').textContent;
+  function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy email'},1600)}
+  function fallback(){var r=document.createRange();r.selectNodeContents(document.getElementById('email'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected — press Ctrl+C'}
+  try{navigator.clipboard.writeText(t).then(done,fallback)}catch(e){fallback()}
+});
+</script>
+</body>
+</html>
